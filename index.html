@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2e806c">
+  <meta name="description" content="A simple offline checklist.">
+  <title>Simple Notes</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-top">
+        <button id="back-button" class="hero-btn" type="button" aria-label="Back to all lists" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <p id="hero-date" class="hero-date"></p>
+        <button id="edit-list-button" class="hero-btn" type="button" aria-label="Edit list" hidden>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>
+        </button>
+      </div>
+      <h1 id="hero-title">Simple Notes</h1>
+      <div class="progress-row">
+        <span id="summary"></span>
+        <span id="progress-count" class="progress-count"></span>
+      </div>
+      <div class="progress" aria-hidden="true"><div id="progress-bar" class="progress-bar"></div></div>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Home: every list, grouped by date -->
+    <section id="home-view">
+      <div id="home-groups"></div>
+      <div id="home-empty" class="empty-state" hidden>
+        <div class="empty-badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12.5l3.2 3.2L17 9"/></svg>
+        </div>
+        <p class="empty-title">No lists yet</p>
+        <p>Tap the + button to create your first list.</p>
+      </div>
+    </section>
+
+    <!-- One list: its tasks -->
+    <section id="list-view" hidden>
+      <ul id="open-list" class="task-list"></ul>
+
+      <section id="done-section" class="done-section" hidden>
+        <h2 class="section-title">Completed <span id="done-count" class="count-pill"></span></h2>
+        <ul id="done-list" class="task-list"></ul>
+      </section>
+
+      <div id="empty-state" class="empty-state" hidden>
+        <div class="empty-badge">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12.5l3.2 3.2L17 9"/></svg>
+        </div>
+        <p class="empty-title">All clear</p>
+        <p>Tap the + button to add a task.</p>
+      </div>
+    </section>
+  </main>
+
+  <button id="add-button" class="fab ripple" type="button" aria-label="New list">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+
+  <!-- Add / edit a list -->
+  <dialog id="list-dialog" class="sheet">
+    <div class="morph-fill" aria-hidden="true"></div>
+    <form id="list-form" method="dialog">
+      <div class="grabber" aria-hidden="true"></div>
+      <div class="sheet-bar">
+        <button type="button" class="text-btn" data-close>Cancel</button>
+        <h2 id="list-dialog-title">New List</h2>
+        <button type="submit" id="list-save-button" class="pill-btn ripple">Save</button>
+      </div>
+      <label class="field">
+        <span class="field-label">Title</span>
+        <input id="list-title-input" type="text" maxlength="100" autocomplete="off"
+               placeholder="e.g. Groceries" enterkeyhint="next">
+      </label>
+      <label class="field">
+        <span class="field-label">Date</span>
+        <input id="list-date-input" type="date">
+      </label>
+      <p id="list-error" class="error" hidden></p>
+      <button type="button" id="delete-list-button" class="danger-btn" hidden>Delete list</button>
+    </form>
+  </dialog>
+
+  <!-- Add / edit a task -->
+  <dialog id="task-dialog" class="sheet">
+    <div class="morph-fill" aria-hidden="true"></div>
+    <form id="task-form" method="dialog">
+      <div class="grabber" aria-hidden="true"></div>
+      <div class="sheet-bar">
+        <button type="button" id="cancel-button" class="text-btn" data-close>Cancel</button>
+        <h2 id="dialog-title">New Task</h2>
+        <button type="submit" id="save-button" class="pill-btn ripple">Save</button>
+      </div>
+      <input id="task-input" type="text" maxlength="500" autocomplete="off"
+             placeholder="What do you need to do?" aria-label="Task text" enterkeyhint="done">
+      <p id="task-error" class="error" hidden>Please enter some text.</p>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
